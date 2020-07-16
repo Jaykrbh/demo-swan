@@ -11,4 +11,5 @@ export default combineReducers({
   messages,
   auth,
   scan,
+  
 });

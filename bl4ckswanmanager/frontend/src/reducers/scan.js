@@ -1,7 +1,8 @@
-import { GET_SCAN } from "../actions/types.js";
+import { GET_SCAN, GET_PRINT } from "../actions/types.js";
 
 const initialState = {
-  scan: []
+  scan: [],
+  
 };
 
 export default function (state = initialState, action) {
@@ -9,8 +10,13 @@ export default function (state = initialState, action) {
     case GET_SCAN:
       return {
         ...state,
-        scan: [action.payload],
+        scan: action.payload,
       };
+      case GET_PRINT:
+        return{
+          ...state,
+          scan: action.payload
+        }
     default:
       return state;
   }

@@ -19,7 +19,7 @@ export class Scan extends Component {
     e.preventDefault();
     const { ip,} = this.state;
     const scan = { ip};
-    this.props.getScan(scan);
+    this.props.getScan(scan.ip);
     this.setState({
       ip: "",
       
@@ -29,14 +29,15 @@ export class Scan extends Component {
     const { ip } = this.state;
     return (
       <div className="card card-body mt-4 mb-4">
-        <h2>Add Scan</h2>
+        <h2>Check For Firewall</h2>
         <form onSubmit={this.onSubmit}>
           <div className="form-group">
-            <label>IP</label>
+            <label>URL</label>
             <input
               className="form-control"
               type="text"
               name="ip"
+              placeholder='example.com'
               onChange={this.onChange}
               value={ip}
             />

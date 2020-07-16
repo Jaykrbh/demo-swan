@@ -1,16 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getScan } from "../../actions/scan";
+import { getScan, getPrint } from "../../actions/scan";
 export class Results extends Component {
   static propTypes = {
     scan: PropTypes.array.isRequired,
     getScan: PropTypes.func.isRequired,
+    getPrint: PropTypes.any.isRequired,
   };
-
-  componentDidMount() {
-    this.props.getScan();
-  }
 
   render() {
     return (
@@ -19,28 +16,21 @@ export class Results extends Component {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Message</th>
+              <th>URL</th>
+              <th>Detected</th>
+              <th>Firewall</th>
+              <th>Manufacturer</th>
+
               <th />
             </tr>
           </thead>
           <tbody>
             {this.props.scan.map((scan) => (
-              <tr key={scan.glossary}>
-                <td></td>
-                <td>{scan.glossary.title}</td>
-                <td>{scan.glossary.GlossDiv.title}</td>
-                <td></td>
-                <td>
-                  {/* <button
-                    onClick={this.props.deleteLead.bind(this, lead.id)}
-                    className="btn btn-danger btn-sm"
-                  >
-                    Delete
-                  </button> */}
-                </td>
+              <tr key={scan.url}>
+                <td>{scan.url}</td>
+                <td>{scan.detected}</td>
+                <td>{scan.firewall}</td>
+                <td>{scan.manufacturer}</td>
               </tr>
             ))}
           </tbody>
@@ -54,4 +44,4 @@ const mapStateToProps = (state) => ({
   scan: state.scan.scan,
 });
 
-export default connect(mapStateToProps, { getScan })(Results);
+export default connect(mapStateToProps, { getScan, getPrint })(Results);

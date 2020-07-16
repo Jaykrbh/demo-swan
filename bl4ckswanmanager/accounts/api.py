@@ -3,7 +3,8 @@ from rest_framework.response import Response
 from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer , LoginSerializer
 import os,json
-from .action import rescreat
+from .action import waf,exportwaf
+from django.http import HttpResponse
 
 
 # Register API
@@ -47,10 +48,19 @@ class UserAPI(generics.RetrieveUpdateAPIView):
 class CmdAPI(generics.GenericAPIView):
     serializer_classes=[]
     def get(self, request,*args,**kwargs):
-        ip = request.query_params['ip']
-        res=print(ip)
-        newdata = rescreat(ip)
+        if (request.query_params['ip'] == None):
+            newdata = []
+        else:
+            newdata = waf(request.query_params['ip'])
+        
         return Response(newdata)
 
+class ExportAPI(generics.RetrieveAPIView):
+    serializer_classes=[]
+    def get(self, request,*args,**kwargs):
+        with open('./accounts/resultwaf.json', 'r') as file:
+            response = HttpResponse(file, content_type='application/json')
+            response['Content-Disposition'] = 'attachment; filename=resultwaf.json'
+            return response
 
 

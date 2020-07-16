@@ -1,35 +1,37 @@
 import json
-import masscan
+import os
 import nmap
 
-def rescreat(fi):
-    print(fi)
-    np=nmap.PortScanner
-    result = np.scan(fi,'-sV')
-        
-        
-    return result
+# def rescreat(fi):
+#     print(fi)
+#     np=nmap.PortScanner()
+#     # np.scaninfo()
+#     #np.csv()
+#     result=np.scan(hosts=fi,arguments='-p80 --script http-waf-detect --script-args="http-waf-detect.aggro,http-waf-detect.uri=/testphp.vulnweb.com/artists.php" ')
+#     #print(np.all_hosts())
+#     #print(np.csv())
+#     #print(np.listscan())
+#     res=[result['scan']]
+#     #print(np.scan(fi, '1-200'))
+#     fl=json.dumps(result)
+#     with open("./accounts/result.json","w") as f:
+#         f.write(fl)
+#     print(res)
+#     return res[0]
 
 
-result2 = {
-    "glossary": {
-        "title": "example glossary",
-		"GlossDiv": {
-            "title": "S",
-			"GlossList": {
-                "GlossEntry": {
-                    "ID": "SGML",
-					"SortAs": "SGML",
-					"GlossTerm": "Standard Generalized Markup Language",
-					"Acronym": "SGML",
-					"Abbrev": "ISO 8879:1986",
-					"GlossDef": {
-                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
-						"GlossSeeAlso": ["GML", "XML"]
-                    },
-					"GlossSee": "markup"
-                }
-            }
-        }
-    }
-}
+def waf(ur):
+    fales = 'No Firewall Detected'
+    true = 'Firewall Detected'
+    
+    res = os.system('wafw00f {url} -o resultwaf.json'.format(url=ur))
+    with open("./accounts/resultwaf.json","w") as f:
+        f.write(res)
+    return res
+
+def export():
+    return "./accounts/result.json"
+
+
+def exportwaf():
+    return "./accounts/resultwaf.json"
